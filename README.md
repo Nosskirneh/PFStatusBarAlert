@@ -16,7 +16,7 @@ You can use it however you would like since it's not limited to only notificatio
 @property (nonatomic, retain) UIWindow *applicationWindow; // app window
 @property (nonatomic, retain) UIButton *actionButton; // main text button
 @property (nonatomic, assign) int oldLevel; // private old window level before overlaying
-- (void)showOverlayForSeconds:(float)seconds; // this will be called for 5.5s automatically on notification. NOTE: if no notification is set call manually
+- (void)showOverlayForSeconds:(float)seconds; // this will be called for 6 s automatically on notification. NOTE: if no notification is set call manually
 - (void)hideOverlay; // hide overlay NOTE: you won't need to call this since the timer hides automatically
 @end
 

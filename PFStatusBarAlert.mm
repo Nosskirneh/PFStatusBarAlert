@@ -7,7 +7,7 @@
 
 static void statusbar_got_notification(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo ) {
     if (observer)
-        [(__bridge PFStatusBarAlert *)observer showOverlayForSeconds:5.5];
+        [(__bridge PFStatusBarAlert *)observer showOverlayForSeconds:6];
 }
 
 @implementation PFStatusBarAlert
@@ -64,7 +64,7 @@ static void statusbar_got_notification(CFNotificationCenterRef center, void *obs
     view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 20);
 }
 
-- (void)showOverlayForSeconds:(float)seconds {
+- (void)showOverlayForSeconds:(unsigned int)seconds {
     if (self.actionButton.isHidden)
         self.actionButton.hidden = NO;
 
@@ -81,11 +81,9 @@ static void statusbar_got_notification(CFNotificationCenterRef center, void *obs
     [UIView animateWithDuration:0.3f animations:^{
         self.actionButton.alpha = 1.0f;
     } completion:^(BOOL finished) {
-        [NSTimer scheduledTimerWithTimeInterval:seconds
-        target:self
-        selector:@selector(hideOverlay)
-        userInfo:nil
-        repeats:NO];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(seconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self hideOverlay];
+        });
     }];
 }
 
